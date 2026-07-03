@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  The Laflens — starter portfolio site
+  ============================================================
+  This is a single, self-contained file. To publish it, it just
+  needs to be named  index.html  and live at the top of your repo.
+
+  Places you'll want to edit are marked with:   EDIT
+
+  To add a real artwork, replace a placeholder tile: swap the
+  <div class="tile"> for an <img src="art/your-file.jpg" alt="...">
+  (put image files in an /art folder in the same repo).
+  ============================================================
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Laflens</title>
+  <meta name="description" content="Art by the Laflen family." /> <!-- EDIT -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --wall:      #F5F4EF;   /* gallery-wall background */
+      --wall-deep: #EEEDE6;   /* slightly recessed panels */
+      --ink:       #1C1B18;   /* primary text */
+      --soft:      #6C6A62;   /* captions, secondary text */
+      --hairline:  #DEDCD2;   /* thin rules */
+      --accent:    #345C57;   /* deep muted teal, used sparingly */
+
+      --display: "Fraunces", Georgia, serif;
+      --body:    "Inter", system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--wall);
+      color: var(--ink);
+      font-family: var(--body);
+      font-size: 17px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-underline-offset: 3px; }
+
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+
+    /* ---------- Masthead ---------- */
+    .masthead {
+      padding: 88px 0 64px;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .wordmark {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: clamp(2.6rem, 7vw, 4.4rem);
+      letter-spacing: -0.02em;
+      line-height: 1.02;
+      margin: 0;
+    }
+    .tagline {
+      margin: 22px 0 0;
+      max-width: 46ch;
+      color: var(--soft);
+      font-size: 1.05rem;
+    }
+    .tagline em { color: var(--ink); font-style: italic; }
+
+    /* ---------- Section scaffolding ---------- */
+    .eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--soft);
+      margin: 0 0 28px;
+    }
+    section { padding: 64px 0; }
+    section + section { border-top: 1px solid var(--hairline); }
+
+    /* ---------- Gallery ---------- */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 40px 32px;
+    }
+    figure {
+      margin: 0;
+      grid-column: span 3;         /* default: half width */
+    }
+    figure.wide { grid-column: span 4; }
+    figure.narrow { grid-column: span 2; }
+
+    .frame {
+      display: block;
+      width: 100%;
+      overflow: hidden;
+      background: var(--wall-deep);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .frame img { display: block; width: 100%; height: auto; }
+    figure:hover .frame { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(28,27,24,0.10); }
+
+    /* placeholder tile — delete once real art is in */
+    .tile {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--soft);
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+      background:
+        linear-gradient(135deg, rgba(52,92,87,0.05), rgba(52,92,87,0.02)),
+        var(--wall-deep);
+      border: 1px solid var(--hairline);
+    }
+    .tile.tall  { aspect-ratio: 3 / 4; }
+    .tile.wide  { aspect-ratio: 4 / 3; }
+    .tile.square{ aspect-ratio: 1 / 1; }
+
+    /* museum-label caption — the signature detail */
+    figcaption {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--hairline);
+    }
+    .cap-title { font-family: var(--display); font-size: 1.06rem; font-weight: 500; }
+    .cap-meta  { color: var(--soft); font-size: 0.86rem; margin-top: 3px; }
+
+    /* ---------- About ---------- */
+    .about p { max-width: 62ch; margin: 0 0 1.1em; }
+
+    /* ---------- Footer ---------- */
+    footer {
+      border-top: 1px solid var(--hairline);
+      padding: 48px 0 72px;
+      color: var(--soft);
+      font-size: 0.9rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: space-between;
+    }
+
+    /* ---------- Motion / entrance ---------- */
+    .rise { opacity: 0; transform: translateY(14px); animation: rise 0.7s ease forwards; }
+    .rise:nth-child(2) { animation-delay: 0.08s; }
+    @keyframes rise { to { opacity: 1; transform: none; } }
+
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    @media (max-width: 720px) {
+      .gallery { gap: 32px 20px; }
+      figure, figure.wide, figure.narrow { grid-column: span 6; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .rise { animation: none; opacity: 1; transform: none; }
+      .frame { transition: none; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="masthead">
+    <div class="wrap">
+      <!-- EDIT: your family name / wordmark -->
+      <h1 class="wordmark rise">The&nbsp;Laflens</h1>
+      <!-- EDIT: one warm line about the work -->
+      <p class="tagline rise">A small gallery of work made at home — <em>paintings, drawings, and things in progress.</em></p>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ GALLERY ============ -->
+    <section id="work">
+      <div class="wrap">
+        <p class="eyebrow">Selected work</p>
+
+        <div class="gallery">
+          <!--
+            Each figure is one piece. To use a real image, replace the
+            <div class="tile ..."></div> line with:
+            <img src="art/filename.jpg" alt="short description" />
+          -->
+
+          <figure class="wide">
+            <span class="frame"><span class="tile wide">Replace with your work · landscape</span></span>
+            <figcaption>
+              <div class="cap-title">Untitled (Morning)</div>            <!-- EDIT -->
+              <div class="cap-meta">Oil on canvas · 2025</div>            <!-- EDIT -->
+            </figcaption>
+          </figure>
+
+          <figure class="narrow">
+            <span class="frame"><span class="tile tall">Replace with your work · portrait</span></span>
+            <figcaption>
+              <div class="cap-title">Study I</div>
+              <div class="cap-meta">Graphite on paper · 2025</div>
+            </figcaption>
+          </figure>
+
+          <figure>
+            <span class="frame"><span class="tile square">Replace with your work · square</span></span>
+            <figcaption>
+              <div class="cap-title">Kitchen Window</div>
+              <div class="cap-meta">Watercolor · 2024</div>
+            </figcaption>
+          </figure>
+
+          <figure>
+            <span class="frame"><span class="tile square">Replace with your work · square</span></span>
+            <figcaption>
+              <div class="cap-title">Field Notes</div>
+              <div class="cap-meta">Mixed media · 2024</div>
+            </figcaption>
+          </figure>
+
+          <figure class="wide">
+            <span class="frame"><span class="tile wide">Replace with your work · landscape</span></span>
+            <figcaption>
+              <div class="cap-title">Late Light</div>
+              <div class="cap-meta">Oil on panel · 2023</div>
+            </figcaption>
+          </figure>
+
+          <figure class="narrow">
+            <span class="frame"><span class="tile tall">Replace with your work · portrait</span></span>
+            <figcaption>
+              <div class="cap-title">Figure, Seated</div>
+              <div class="cap-meta">Charcoal · 2023</div>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section id="about" class="about">
+      <div class="wrap">
+        <p class="eyebrow">About</p>
+        <!-- EDIT: a few sentences in your own voice -->
+        <p>The Laflens make things at the kitchen table and in the corner of the garage that fills up with jars of brushes. This site is a place to keep the work together — some finished, some still figuring itself out.</p>
+        <p>New pieces get added as they're done. Thanks for looking.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap" style="display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between; width:100%;">
+      <!-- EDIT: your contact email -->
+      <span>Say hello: <a href="mailto:hello@thelaflens.com">hello@thelaflens.com</a></span>
+      <span>© <span id="year"></span> The Laflens</span>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
